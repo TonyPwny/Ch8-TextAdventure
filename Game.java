@@ -1,4 +1,10 @@
 /**
+ * Modification of "World of Zuul" application
+ * 
+ * @author Anthony Tiongson
+ * @version 2018.11.03
+ * 
+ * Original credits
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
  *  can walk around some scenery. That's all. It should really be extended 
@@ -10,7 +16,7 @@
  *  This main class creates and initialises all the others: it creates all
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
- * 
+ *  
  * @author  Michael Kölling and David J. Barnes
  * @version 2011.08.10
  */
@@ -34,30 +40,61 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room livingRoom, diningRoom, hub, bedroom, walkInCloset, office, artStudio,
+            bathroom, kitchen, pantry, foyer, vestibule;
       
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        livingRoom = new Room("in half of a finished attic...\n" +
+                            "It's set up as a living room");
+        diningRoom = new Room("in one side of a finished attic...\n" +
+                            "Seems to be the dining area");
+        hub = new Room("in a central hallway...\n" +
+                            "It connects all the rooms and stairways");
+        bedroom = new Room("in a simple bedroom...It's pretty bare.\n" +
+                            "Guess this is where magic is casted..");
+        walkInCloset = new Room("in a closet within the bedroom...\n" +
+                            "It's so big you can kind of walk around in it");
+        office = new Room("in a personal office of some kind...\n" +
+                            "Hopefully lots of business deals to be had in here");
+        artStudio = new Room("surrounded by a mess of creative materials in here...\n" +
+                            "A canvas and an angled desk sit around the clutter..");
+        bathroom = new Room("in a very small bathroom with the basics...\n" +
+                            "Next to the toilet is a large litterbox;\n" +
+                            "it's a multi-species facility..");
+        kitchen = new Room("in the kitchen...Some say this is the heart of a home <3..");
+        pantry = new Room("in a pantry..it's pretty big");
+        foyer = new Room("in the first floor at the bottom of the L-shaped stairs...\n" +
+                            "It's small, and just serves as a foyer...\n" +
+                            "There's a windowed door with a view out into a vestibule");
+        vestibule = new Room("in the vestibule to the household...\n" +
+                            "The outside world can be seen on the other side of the door\n" +
+                            "opposite from the door leading into the abode");
         
         // initialise room exits
-        outside.setExit("east", theater);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
+        livingRoom.setExit("southeast", diningRoom);
+        diningRoom.setExit("northeast", livingRoom);
+        diningRoom.setExit("northwest", hub);
+        hub.setExit("west", diningRoom);
+        hub.setExit("southwest", bedroom);
+        bedroom.setExit("east", hub);
+        bedroom.setExit("northwest", walkInCloset);
+        walkInCloset.setExit("southwest", bedroom);
+        hub.setExit("northwest", office);
+        office.setExit("southeast", hub);
+        hub.setExit("north", artStudio);
+        artStudio.setExit("southwest", hub);
+        hub.setExit("southeast", bathroom);
+        bathroom.setExit("west", hub);
+        hub.setExit("south", kitchen);
+        kitchen.setExit("north", hub);
+        kitchen.setExit("west", pantry);
+        pantry.setExit("east", kitchen);
+        hub.setExit("east", foyer);
+        foyer.setExit("southeast", hub);
+        foyer.setExit("north", vestibule);
+        vestibule.setExit("south", foyer);
 
-        theater.setExit("west", outside);
-
-        pub.setExit("east", outside);
-
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
-
-        office.setExit("west", lab);
-
-        currentRoom = outside;  // start game outside
+        currentRoom = livingRoom;  // start game in the living room
     }
 
     /**
@@ -75,7 +112,8 @@ public class Game
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
-        System.out.println("Thank you for playing.  Good bye.");
+        System.out.println("Thank you for visiting...\n" +
+                            "Come back soon!");
     }
 
     /**
@@ -132,7 +170,7 @@ public class Game
     private void printHelp() 
     {
         System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("around in the apartment.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
