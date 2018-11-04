@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=Player
+comment0.text=\n\ Write\ a\ description\ of\ class\ Player\ here.\n\n\ @author\ Anthony\ Tiongson\n\ @version\ 2018.11.4\n
+comment1.params=
+comment1.target=Player()
+comment1.text=\n\ No-Arg\ Constructor\ for\ objects\ of\ class\ Player\n
+comment2.params=name\ currentRoom
+comment2.target=Player(java.lang.String,\ Room)
+comment3.params=currentRoom
+comment3.target=void\ setRoom(Room)
+comment4.params=
+comment4.target=Room\ getRoom()
+comment5.params=
+comment5.target=java.lang.String\ getName()
+comment5.text=\n\ Method\ to\ retrieve\ a\ player's\ name\n\n\ @return\ String\ name\ of\ player\n
+numComments=6

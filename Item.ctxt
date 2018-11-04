@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=Item
+comment0.text=\n\ Item\ class\ to\ simply\ manage\ simple\ items\ found\ in\ rooms.\n\n\ @author\ Anthony\ Tiongson\n\ @version\ 2018.11.03\n
+comment1.params=
+comment1.target=Item()
+comment1.text=\n\ No-arg\ Constructor\ for\ objects\ of\ class\ Item.\n
+comment2.params=name\ description
+comment2.target=Item(java.lang.String,\ java.lang.String)
+comment2.text=\n\ Constructor\ for\ objects\ of\ class\ Item.\n\ @param\ String\ description\ of\ object\n\ @param\ int\ weight\ of\ object\n
+comment3.params=
+comment3.target=java.lang.String\ getName()
+comment3.text=\n\ Get\ an\ item's\ name.\n\ \n\ @return\ String\ name\ of\ an\ item\n
+comment4.params=
+comment4.target=java.lang.String\ getDescription()
+comment4.text=\n\ Get\ an\ item's\ description.\n\ \n\ @return\ String\ description\ of\ an\ item.\n
+numComments=5

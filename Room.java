@@ -1,5 +1,6 @@
 import java.util.Set;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -20,6 +21,8 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;        // stores exits of this room.
+    private Item item;
+    private ArrayList<Item> itemsInRoom;    // stores items in this room
 
     /**
      * Create a room described "description". Initially, it has
@@ -31,6 +34,7 @@ public class Room
     {
         this.description = description;
         exits = new HashMap<String, Room>();
+        itemsInRoom = new ArrayList<Item>();
     }
 
     /**
@@ -41,6 +45,16 @@ public class Room
     public void setExit(String direction, Room neighbor) 
     {
         exits.put(direction, neighbor);
+    }
+    
+    public void setItem(Item item)
+    {
+        itemsInRoom.add(item);
+    }
+    
+    public void removeItem(Item item)
+    {
+        itemsInRoom.remove(item);
     }
 
     /**
@@ -60,7 +74,7 @@ public class Room
      */
     public String getLongDescription()
     {
-        return "You are " + description + ".\n" + getExitString();
+        return "You are " + description + ".\n" + getExitString() + "\n" + getItemsString();
     }
 
     /**
@@ -74,6 +88,15 @@ public class Room
         Set<String> keys = exits.keySet();
         for(String exit : keys) {
             returnString += " " + exit;
+        }
+        return returnString;
+    }
+    
+    private String getItemsString()
+    {
+        String returnString = "Items:";
+        for(Item item : itemsInRoom ) {
+            returnString += " " + item.getName() + "  ";
         }
         return returnString;
     }

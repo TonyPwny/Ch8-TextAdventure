@@ -24,7 +24,7 @@
 public class Game 
 {
     private Parser parser;
-    private Room currentRoom;
+    private Player player;
         
     /**
      * Create the game and initialise its internal map.
@@ -36,7 +36,7 @@ public class Game
     }
 
     /**
-     * Create all the rooms and link their exits together.
+     * Create all the rooms and link their exits and items together.
      */
     private void createRooms()
     {
@@ -121,8 +121,44 @@ public class Game
         foyer.setExit("southeast", hub);
         foyer.setExit("north", vestibule);
         vestibule.setExit("south", foyer);
-
-        currentRoom = livingRoom;  // start game in the living room
+        
+        // create items
+        
+        Item dust, pabloBowl, willyBowl, waterBowl, television, macBookAir, sharpie,
+                keys, iPhone, watch;
+        
+        dust = new Item();
+        pabloBowl = new Item("Pablo's bowl", "Pablo's food bowl; it typically is placed to\n" +
+                                "the left of the water bowl.");
+        willyBowl = new Item("Willy's bowl", "Wilhemina's food bowl; its typically empty and\n" +
+                                "on the right side of the water bowl.");
+        waterBowl = new Item("Water bowl", "A shared water bowl for the kitties.  It's much\n" +
+                                "larger than their food bowls and sits between them.");
+        television = new Item("Samsung 4K TV", "A curved Samsung 4K TV bought from\n" +
+                                "Costco Online.  It's bright and beautiful...\n" +
+                                "LET THE BINGING BEGIN!");
+        macBookAir = new Item("MacBook Air", "An 11-inch i7 MacBook Air from 2015; the last\n" +
+                                "of its kind.  It's internal SSD has been upgraded from\n" +
+                                "120GB to 512GB...");
+        sharpie = new Item("Sharpie", "A black Sharpie permanent marker.");
+        keys = new Item("Keychain", "A keychain with a FOB to a Toyota.");
+        iPhone = new Item("iPhone", "An old 64GB iPhone 6s...It still works really well...");
+        watch = new Item("Apple Watch", "A 42mm series 3 Apple Watch.");
+        
+        // put items into rooms
+        
+        hub.setItem(dust);
+        diningRoom.setItem(pabloBowl);
+        diningRoom.setItem(willyBowl);
+        diningRoom.setItem(waterBowl);
+        livingRoom.setItem(television);
+        office.setItem(macBookAir);
+        artStudio.setItem(sharpie);
+        bedroom.setItem(keys);
+        bedroom.setItem(iPhone);
+        bedroom.setItem(watch);
+        
+        player = new Player("player", livingRoom);  // start game in the living room
     }
 
     /**
@@ -150,11 +186,12 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("You've overslept and you have work today!");
+        System.out.println("Can you find your keys and your way out of\n" +
+                            "the apartment before it's too late?!");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
-        System.out.println(currentRoom.getLongDescription());
+        System.out.println(player.getRoom().getLongDescription());
     }
 
     /**
@@ -172,6 +209,17 @@ public class Game
             case UNKNOWN:
                 System.out.println("I don't know what you mean...");
                 break;
+            
+            // 8.15 (p 303) - add another command, ie eat with a simple text response 
+            case PABLO:
+                System.out.println("You call out to Pablo...\n" +
+                                    "You wonder where that feisty feline is...");
+                break;
+                
+            case WILLY:
+                System.out.println("You sing a high pitched singsong for Willy...\n" +
+                                    "You wonder where she's napping the day away...");
+                break;
 
             case HELP:
                 printHelp();
@@ -184,7 +232,8 @@ public class Game
             case LOOK:
                 look();
                 break;
-
+                
+            case EXIT:
             case QUIT:
                 wantToQuit = quit(command);
                 break;
@@ -204,13 +253,18 @@ public class Game
         System.out.println("You are lost. You are alone. You wander");
         System.out.println("around in the apartment.");
         System.out.println();
+        // 8.16 (p 305) - Streamline printing of available commands
         System.out.println("Your command words are:");
         parser.showCommands();
     }
     
+    // 8.14 - add the look command to your game (p 303)
+    /**
+     * A look command to reiterate your current location.
+     */
     private void look()
     {
-        System.out.println(currentRoom.getLongDescription());
+        System.out.println(player.getRoom().getLongDescription());
     }
 
     /** 
@@ -228,19 +282,19 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        Room nextRoom = currentRoom.getExit(direction);
+        Room nextRoom = player.getRoom().getExit(direction);
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
         else {
-            currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
+            player.setRoom(nextRoom);
+            System.out.println(player.getRoom().getLongDescription());
         }
     }
 
     /** 
-     * "Quit" was entered. Check the rest of the command to see
+     * "Quit" or "exit" was entered. Check the rest of the command to see
      * whether we really quit the game.
      * @return true, if this command quits the game, false otherwise.
      */
