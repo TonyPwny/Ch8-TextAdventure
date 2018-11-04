@@ -45,30 +45,58 @@ public class Game
       
         // create the rooms
         livingRoom = new Room("in half of a finished attic...\n" +
-                            "It's set up as a living room");
+                            "It's set up as a living room.  To your north is a TV.\n" +
+                            "You can see stairs to the southwest behind a railing\n" +
+                            "attached to a wall in the south.  To the southeast is\n" +
+                            "an opening to the other side of the attic");
         diningRoom = new Room("in one side of a finished attic...\n" +
-                            "Seems to be the dining area");
+                            "Seems to be the dining area; there is a dining table\n" +
+                            "and chairs in the middle of the room.  To your north\n" +
+                            "is a wall with a clock hanging on it.  A railing is\n" +
+                            "attached to it to the northwest leading to stairs\n" +
+                            "going down to the floor below.  On the west wall are\n" +
+                            "two small food bowls and one larger water bowl");
         hub = new Room("in a central hallway...\n" +
-                            "It connects all the rooms and stairways");
+                            "It connects all the rooms and stairways.  There are\n" +
+                            "doorways to the northwest, north, southeast, and\n" +
+                            "southwest of you.  To your west is a narrow\n" +
+                            "stairway headed upwards, and to your east is an\n" +
+                            "L-shaped stairyway headed downwards.  Towards the\n" +
+                            "south is an open entryway to another room");
         bedroom = new Room("in a simple bedroom...It's pretty bare.\n" +
-                            "Guess this is where magic is casted..");
+                            "Guess this is where magic is casted...\n" +
+                            "To your northwest is a door and to your northeast\n" +
+                            "is the doorway to the central hallway");
         walkInCloset = new Room("in a closet within the bedroom...\n" +
-                            "It's so big you can kind of walk around in it");
+                            "It's so big you can kind of walk around in it...\n" +
+                            "to your southwest is the door back into the\n" +
+                            "bedroom..");
         office = new Room("in a personal office of some kind...\n" +
-                            "Hopefully lots of business deals to be had in here");
+                            "Hopefully lots of business deals to be had in here.\n" +
+                            "The exit back into the central hallway is to your\n" +
+                            "southeast.");
         artStudio = new Room("surrounded by a mess of creative materials in here...\n" +
-                            "A canvas and an angled desk sit around the clutter..");
+                            "A canvas and an angled desk sit around all the clutter\n" +
+                            "against the northern wall.  The exit back into the\n" +
+                            "central hallway is to your southwest");
         bathroom = new Room("in a very small bathroom with the basics...\n" +
                             "Next to the toilet is a large litterbox;\n" +
-                            "it's a multi-species facility..");
-        kitchen = new Room("in the kitchen...Some say this is the heart of a home <3..");
-        pantry = new Room("in a pantry..it's pretty big");
+                            "seems to be a multi-species facility...\n" +
+                            "On the western side is the doorway you came from");
+        kitchen = new Room("in the kitchen...Some say this is the heart of a home <3\n" +
+                            "There's a door on the west wall, and to the northeast\n" +
+                            "is the open entryway to back the central hallway");
+        pantry = new Room("in a pantry..it's pretty big.  The doorway back to the\n" +
+                            "kitchen is to the east");
         foyer = new Room("in the first floor at the bottom of the L-shaped stairs...\n" +
                             "It's small, and just serves as a foyer...\n" +
-                            "There's a windowed door with a view out into a vestibule");
+                            "There's a windowed door with a view out into a vestibule\n" +
+                            "to the north with stairs back to the second floor in the\n" +
+                            "southeast");
         vestibule = new Room("in the vestibule to the household...\n" +
                             "The outside world can be seen on the other side of the door\n" +
-                            "opposite from the door leading into the abode");
+                            "opposite from the door leading into the abode on the\n" +
+                            "southern wall");
         
         // initialise room exits
         livingRoom.setExit("southeast", diningRoom);
@@ -76,7 +104,7 @@ public class Game
         diningRoom.setExit("northwest", hub);
         hub.setExit("west", diningRoom);
         hub.setExit("southwest", bedroom);
-        bedroom.setExit("east", hub);
+        bedroom.setExit("northeast", hub);
         bedroom.setExit("northwest", walkInCloset);
         walkInCloset.setExit("southwest", bedroom);
         hub.setExit("northwest", office);
@@ -86,7 +114,7 @@ public class Game
         hub.setExit("southeast", bathroom);
         bathroom.setExit("west", hub);
         hub.setExit("south", kitchen);
-        kitchen.setExit("north", hub);
+        kitchen.setExit("northwest", hub);
         kitchen.setExit("west", pantry);
         pantry.setExit("east", kitchen);
         hub.setExit("east", foyer);
@@ -152,6 +180,10 @@ public class Game
             case GO:
                 goRoom(command);
                 break;
+                
+            case LOOK:
+                look();
+                break;
 
             case QUIT:
                 wantToQuit = quit(command);
@@ -174,6 +206,11 @@ public class Game
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
+    }
+    
+    private void look()
+    {
+        System.out.println(currentRoom.getLongDescription());
     }
 
     /** 
