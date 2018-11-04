@@ -61,11 +61,12 @@ public class Player
             else
             {
                 System.out.println("You are unable to carry " + item.getName() +
-                                    " in your inventory.");
+                                    " (" + item.getWeight() + ")" +
+                                    "\nin your inventory.  Max equip burden: " + maxBurden);
             }
         }
         else {
-            System.out.println("There is no " + itemID);
+            System.out.println("There is no " + itemID + "...");
         }
     }
     
@@ -116,7 +117,55 @@ public class Player
      */
     public String getName()
     {
-        // put your code here
         return name;
+    }
+    
+    public String getInventoryString()
+    {
+        
+        String returnString = "You are carrying in your inventory:\n";
+        
+        for(Item item : inventory ) {
+            returnString += "\t" + item.getID() + "\n\t\t- " + item.getName() +
+                            "\n\t\t- weight: " + item.getWeight() + "\n";
+        }
+        
+        returnString += "\nEquip Burden:\t" + equipBurden + "/" + maxBurden;
+        
+        return returnString;
+    }
+    
+    public void eat(String id)
+    {
+        if(hasItem(id)) {
+            
+            Item item = getItem(id);
+            Food food;
+            if(item instanceof Food)
+            {
+                food = (Food)item;
+                if(food.isMagical())
+                {
+                    System.out.println("You ate " + food.getName() + "!!\n" +
+                                        "Somehow, you feel stronger...");
+                    maxBurden = 100;
+                    inventory.remove(food);
+                }
+                else
+                {
+                    System.out.println("You ate " + food.getName() + ".");
+                    inventory.remove(food);
+                }
+            }
+            else
+            {
+                System.out.println("You cannot eat " + item.getName() + "...\n" +
+                                    "I mean maybe you can but you really shouldn't...");
+            }
+        
+        }
+        else {
+            System.out.println("No " + id + " to eat in inventory.");
+        }
     }
 }

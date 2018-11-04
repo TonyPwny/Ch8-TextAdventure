@@ -126,6 +126,7 @@ public class Game
         // create items
         Item dust, pabloBowl, willyBowl, waterBowl, television, macBookAir, sharpie,
                 keys, iPhone, watch;
+        Food chocolate, magicCookie;
         
         dust = new Item();
         pabloBowl = new Item("pablosbowl", "Pablo's food bowl",
@@ -146,6 +147,9 @@ public class Game
                                 "It runs really well still...technology!!", 2);
         watch = new Item("watch", "a 42mm series 3 Apple Watch",
                                 "It's an excellent activity monitor.", 1);
+        chocolate = new Food();
+        magicCookie = new Food("cookie", "a magical cookie",
+                                "It's a cookie...and it's magical!", 1, true);
         
         // put items into rooms
         
@@ -159,6 +163,8 @@ public class Game
         bedroom.setItem(keys);
         bedroom.setItem(iPhone);
         bedroom.setItem(watch);
+        kitchen.setItem(chocolate);
+        kitchen.setItem(magicCookie);
         
         player = new Player("player", livingRoom);  // start game in the living room
     }
@@ -243,6 +249,14 @@ public class Game
                 drop(command);
                 break;
                 
+            case EAT:
+                eat(command);
+                break;
+                
+            case ITEM:
+                printInventory();
+                break;
+                
             case EXIT:
             case QUIT:
                 wantToQuit = quit(command);
@@ -276,7 +290,12 @@ public class Game
     {
         System.out.println(player.getRoom().getLongDescription());
     }
-
+    
+    private void printInventory()
+    {
+        System.out.println(player.getInventoryString());
+    }
+    
     /** 
      * Try to go in one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
@@ -331,6 +350,21 @@ public class Game
         // Try to take item
 
         player.dropItem(itemName);
+    }
+    
+    private void eat(Command command)
+    {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know where to go...
+            System.out.println("Eat what?");
+            return;
+        }
+
+        String food = command.getSecondWord();
+
+        // Try to take item
+
+        player.eat(food);
     }
 
     /** 

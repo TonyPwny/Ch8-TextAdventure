@@ -96,7 +96,8 @@ public class Room
     {
         String returnString = "Items:\t";
         for(Item item : itemsInRoom ) {
-            returnString += item.getID() + " -\t(" + item.getName() + ")\n\t";
+            returnString += item.getID() + "\n\t\t- " + item.getName() +
+                            "\n\t\t- weight: " + item.getWeight() + "\n\t";
         }
         return returnString;
     }
