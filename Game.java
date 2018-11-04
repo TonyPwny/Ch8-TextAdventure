@@ -31,14 +31,15 @@ public class Game
      */
     public Game() 
     {
-        createRooms();
+        createLevel();
         parser = new Parser();
     }
 
     /**
-     * Create all the rooms and link their exits and items together.
+     * Create all the rooms and link their exits together.
+     * Create all the items and place them into rooms.
      */
-    private void createRooms()
+    private void createLevel()
     {
         Room livingRoom, diningRoom, hub, bedroom, walkInCloset, office, artStudio,
             bathroom, kitchen, pantry, foyer, vestibule;
@@ -123,27 +124,28 @@ public class Game
         vestibule.setExit("south", foyer);
         
         // create items
-        
         Item dust, pabloBowl, willyBowl, waterBowl, television, macBookAir, sharpie,
                 keys, iPhone, watch;
         
         dust = new Item();
-        pabloBowl = new Item("Pablo's bowl", "Pablo's food bowl; it typically is placed to\n" +
-                                "the left of the water bowl.");
-        willyBowl = new Item("Willy's bowl", "Wilhemina's food bowl; its typically empty and\n" +
-                                "on the right side of the water bowl.");
-        waterBowl = new Item("Water bowl", "A shared water bowl for the kitties.  It's much\n" +
-                                "larger than their food bowls and sits between them.");
-        television = new Item("Samsung 4K TV", "A curved Samsung 4K TV bought from\n" +
-                                "Costco Online.  It's bright and beautiful...\n" +
-                                "LET THE BINGING BEGIN!");
-        macBookAir = new Item("MacBook Air", "An 11-inch i7 MacBook Air from 2015; the last\n" +
-                                "of its kind.  It's internal SSD has been upgraded from\n" +
-                                "120GB to 512GB...");
-        sharpie = new Item("Sharpie", "A black Sharpie permanent marker.");
-        keys = new Item("Keychain", "A keychain with a FOB to a Toyota.");
-        iPhone = new Item("iPhone", "An old 64GB iPhone 6s...It still works really well...");
-        watch = new Item("Apple Watch", "A 42mm series 3 Apple Watch.");
+        pabloBowl = new Item("pablosbowl", "Pablo's food bowl",
+                                "It typically goes to the left of the water bowl.", 2);
+        willyBowl = new Item("willysbowl", "Wilhemina's food bowl",
+                                "It's usually empty and to the right of the water bowl.", 2);
+        waterBowl = new Item("waterbowl", "a shared water bowl for the kitties",
+                                "It's bigger than the food bowls.", 3);
+        television = new Item("tv", "a curved Samsung 4K TV",
+                                "Bought from Costco Online...\nIt's bright and beauitful...\nLET THE BINGING BEGIN!!", 60);
+        macBookAir = new Item("macbook", "an 11-inch i7 MacBook Air from 2015",
+                                "It's amazing and the last of its kind...\nIt's SSD has been upgraded to 512GB!", 4);
+        sharpie = new Item("sharpie", "a black Sharpie permanent marker",
+                                "Very useful.", 1);
+        keys = new Item("keys", "a keychain with a FOB for a Toyota",
+                                "The FOB is covered with a yellow plastic protector...", 1);
+        iPhone = new Item("iphone", "an old 64GB iPhone 6s",
+                                "It runs really well still...technology!!", 2);
+        watch = new Item("watch", "a 42mm series 3 Apple Watch",
+                                "It's an excellent activity monitor.", 1);
         
         // put items into rooms
         
@@ -217,7 +219,7 @@ public class Game
                 break;
                 
             case WILLY:
-                System.out.println("You sing a high pitched singsong for Willy...\n" +
+                System.out.println("You sing a high pitched singsong for Wilhemina...\n" +
                                     "You wonder where she's napping the day away...");
                 break;
 
@@ -231,6 +233,14 @@ public class Game
                 
             case LOOK:
                 look();
+                break;
+                
+            case TAKE:
+                take(command);
+                break;
+                
+            case DROP:
+                drop(command);
                 break;
                 
             case EXIT:
@@ -285,12 +295,42 @@ public class Game
         Room nextRoom = player.getRoom().getExit(direction);
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            System.out.println("There is no door, entryway, or stairs!");
         }
         else {
             player.setRoom(nextRoom);
             System.out.println(player.getRoom().getLongDescription());
         }
+    }
+    
+    private void take(Command command) 
+    {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know where to go...
+            System.out.println("Take what?");
+            return;
+        }
+
+        String itemName = command.getSecondWord();
+
+        // Try to take item
+
+        player.takeItem(itemName);
+    }
+    
+    private void drop(Command command) 
+    {
+        if(!command.hasSecondWord()) {
+            // if there is no second word, we don't know where to go...
+            System.out.println("Drop what?");
+            return;
+        }
+
+        String itemName = command.getSecondWord();
+
+        // Try to take item
+
+        player.dropItem(itemName);
     }
 
     /** 

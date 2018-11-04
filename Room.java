@@ -84,21 +84,43 @@ public class Room
      */
     private String getExitString()
     {
-        String returnString = "Exits:";
+        String returnString = "Exits:\t";
         Set<String> keys = exits.keySet();
         for(String exit : keys) {
-            returnString += " " + exit;
+            returnString += exit + " ";
         }
         return returnString;
     }
     
     private String getItemsString()
     {
-        String returnString = "Items:";
+        String returnString = "Items:\t";
         for(Item item : itemsInRoom ) {
-            returnString += " " + item.getName() + "  ";
+            returnString += item.getID() + " -\t(" + item.getName() + ")\n\t";
         }
         return returnString;
+    }
+    
+    public boolean hasItem(String itemID)
+    {
+        boolean itemTest = false;
+        for(Item item : itemsInRoom) {
+            if(itemID.equals(item.getID())) {
+                itemTest = true;
+            }
+        }
+        return itemTest;
+    }
+    
+    public Item getItem(String itemID)
+    {
+        Item returnItem = null;
+        for(Item item : itemsInRoom) {
+            if(itemID.equals(item.getID())) {
+                returnItem = item;
+            }
+        }
+        return returnItem;
     }
 
     /**
