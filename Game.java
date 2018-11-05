@@ -1,6 +1,11 @@
 /**
  * Modification of "World of Zuul" application
  * 
+ * Modified to simulate waking up in your apartment late for work.
+ * You must find your keys and your way out to your car.
+ * If you don't have your keys upon leaving the apartment, you
+ * may get yourself locked out and with no way to get to work.
+ * 
  * @author Anthony Tiongson
  * @version 2018.11.03
  * 
@@ -17,14 +22,15 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  *  
- * @author  Michael Kölling and David J. Barnes
- * @version 2011.08.10
+ * @originalAuthor  Michael Kölling and David J. Barnes
+ * @originalVersion 2011.08.10
  */
 
 public class Game 
 {
     private Parser parser;
     private Player player;
+    private Room beforeLocked, lockedRoom, beforeFinal, finalRoom;
         
     /**
      * Create the game and initialise its internal map.
@@ -42,7 +48,7 @@ public class Game
     private void createLevel()
     {
         Room livingRoom, diningRoom, hub, bedroom, walkInCloset, office, artStudio,
-            bathroom, kitchen, pantry, foyer, vestibule;
+            bathroom, kitchen, pantry, foyer, vestibule, outside, prius;
       
         // create the rooms
         livingRoom = new Room("in half of a finished attic...\n" +
@@ -91,13 +97,23 @@ public class Game
                             "kitchen is to the east");
         foyer = new Room("in the first floor at the bottom of the L-shaped stairs...\n" +
                             "It's small, and just serves as a foyer...\n" +
-                            "There's a windowed door with a view out into a vestibule\n" +
-                            "to the north with stairs back to the second floor in the\n" +
-                            "southeast");
+                            "There's a windowed door that automatically locks the\n" +
+                            "outer handleset with a view out into a vestibule to the\n" +
+                            "north and the stairs back up to the second floor are\n" +
+                            "to the southeast");
         vestibule = new Room("in the vestibule to the household...\n" +
                             "The outside world can be seen on the other side of the door\n" +
                             "opposite from the door leading into the abode on the\n" +
                             "southern wall");
+        outside = new Room("outside...\n" +
+                            "Your Prius is parked in the driveway to the right/east\n" +
+                            "of you.  The entrance back into the apartment is south");
+        prius = new Room("finally at your car...\n" +
+                            "Time to get to work");
+        beforeLocked = vestibule;
+        lockedRoom = foyer;
+        beforeFinal = outside;
+        finalRoom = prius;  // end game in Prius
         
         // initialise room exits
         livingRoom.setExit("southeast", diningRoom);
@@ -122,6 +138,9 @@ public class Game
         foyer.setExit("southeast", hub);
         foyer.setExit("north", vestibule);
         vestibule.setExit("south", foyer);
+        vestibule.setExit("north", outside);
+        outside.setExit("south", vestibule);
+        outside.setExit("east", prius);
         
         // create items
         Item dust, pabloBowl, willyBowl, waterBowl, television, macBookAir, sharpie,
@@ -160,11 +179,13 @@ public class Game
         livingRoom.setItem(television);
         office.setItem(macBookAir);
         artStudio.setItem(sharpie);
+        artStudio.setItem(dust);
         bedroom.setItem(keys);
         bedroom.setItem(iPhone);
         bedroom.setItem(watch);
         kitchen.setItem(chocolate);
         kitchen.setItem(magicCookie);
+        foyer.setItem(dust);
         
         player = new Player("player", livingRoom);  // start game in the living room
     }
@@ -181,8 +202,23 @@ public class Game
                 
         boolean finished = false;
         while (! finished) {
-            Command command = parser.getCommand();
-            finished = processCommand(command);
+            
+            if(player.getRoom() == finalRoom && player.hasItem("keys")) {
+                finished = true;
+                System.out.println("The car unlocks as you touch the door handle.\n" +
+                                    "You start your car and head onto work.");
+            }
+            else if(player.getRoom() == finalRoom)
+            {
+                System.out.println("You realize you don't have your keys though...\n" +
+                                    "You can't get in! *sad trombone*\n" +
+                                    "You are still outside...");
+                player.setRoom(beforeFinal);
+            }
+            else{
+                Command command = parser.getCommand();
+                finished = processCommand(command);
+            }
         }
         System.out.println("Thank you for visiting...\n" +
                             "Come back soon!");
@@ -274,8 +310,8 @@ public class Game
      */
     private void printHelp() 
     {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around in the apartment.");
+        System.out.println("You are sleepy. You are cranky. You wander");
+        System.out.println("around in the apartment not wanting to go to work...");
         System.out.println();
         // 8.16 (p 305) - Streamline printing of available commands
         System.out.println("Your command words are:");
@@ -315,6 +351,18 @@ public class Game
 
         if (nextRoom == null) {
             System.out.println("There is no door, entryway, or stairs!");
+        }
+        else if (player.getRoom() == beforeLocked && nextRoom == lockedRoom && !player.hasItem("keys"))
+        {
+            System.out.println("Oh wow you locked yourself out!\n" +
+                                "Game over, man...");
+        }
+        else if (player.getRoom() == beforeLocked && nextRoom == lockedRoom && player.hasItem("keys"))
+        {
+            System.out.println("Luckily you remembered your keys because this\n" +
+                                "door automatically locks...");
+            player.setRoom(nextRoom);
+            System.out.println(player.getRoom().getLongDescription());
         }
         else {
             player.setRoom(nextRoom);

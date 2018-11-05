@@ -7,12 +7,13 @@
  */
 public class Item
 {
-    // instance variables - replace the example below with your own
+    // instance variables
     private String id, name, description;
     private int weight;
 
     /**
      * No-arg Constructor for objects of class Item.
+     * Creates dirt with weight 0.
      */
     public Item()
     {
@@ -25,8 +26,10 @@ public class Item
     
     /**
      * Constructor for objects of class Item.
-     * @param String description of object
-     * @param int weight of object
+     * @param String id for item
+     * @param String name of item
+     * @param String description of item
+     * @param integer weight of item
      */
     public Item(String id, String name, String description, int weight)
     {
@@ -56,6 +59,11 @@ public class Item
         return name;
     }
     
+    /**
+     * Get an item's description.
+     * 
+     * @return String description of item
+     */
     public String getDescription()
     {
         return description;
@@ -64,7 +72,7 @@ public class Item
     /**
      * Get an item's weight.
      * 
-     * @return integer weight of an item
+     * @return integer weight of item
      */
     public int getWeight()
     {

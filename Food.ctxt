@@ -1,11 +1,13 @@
 #BlueJ class context
 comment0.target=Food
-comment0.text=\n\ Write\ a\ description\ of\ class\ Food\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
+comment0.text=\n\ Food\ class\ is\ a\ subclass\ of\ Item\ to\ recognize\ special\ items\ that\ can\ be\ eaten.\n\ It\ has\ an\ additional\ field\ to\ signify\ if\ the\ food\ is\ magical\ or\ not.\n\n\ @author\ Anthony\ Tiongson\n\ @version\ 2018.11.04\n
 comment1.params=
 comment1.target=Food()
-comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Food\n
+comment1.text=\n\ No-Arg\ Constructor\ for\ objects\ of\ class\ Food\n\ It\ makes\ a\ non-magical\ bar\ of\ chocolate.\n
 comment2.params=id\ name\ description\ weight\ magical
 comment2.target=Food(java.lang.String,\ java.lang.String,\ java.lang.String,\ int,\ boolean)
+comment2.text=\n\ Constructor\ for\ objects\ of\ class\ Food.\n\ @param\ String\ id\ of\ food\n\ @param\ String\ name\ of\ food\n\ @param\ String\ description\ of\ food\n\ @param\ integer\ weight\ of\ food\n\ @param\ boolean\ magical\ to\ signify\ if\ food\ is\ magical\ or\ not\n
 comment3.params=
 comment3.target=boolean\ isMagical()
+comment3.text=\n\ Method\ to\ test\ if\ a\ food\ object\ is\ magical\ or\ not.\n\ \n\ @return\ boolean\ true\ if\ food\ is\ magical\ false\ otherwise\n
 numComments=4

@@ -1,9 +1,16 @@
 import java.util.Set;
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
+ * Modification of "World of Zuul" application
+ * 
+ * Modified to handle an ArrayList of Item objects within each room.
+ * 
+ * @author Anthony Tiongson
+ * @version 2018.11.04
+ * 
+ * Original credits
  * Class Room - a room in an adventure game.
  *
  * This class is part of the "World of Zuul" application. 
@@ -13,8 +20,8 @@ import java.util.Iterator;
  * connected to other rooms via exits.  For each existing exit, the room 
  * stores a reference to the neighboring room.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2011.08.10
+ * @originalAuthor  Michael Kölling and David J. Barnes
+ * @originalVersion 2011.08.10
  */
 
 public class Room 
@@ -22,12 +29,14 @@ public class Room
     private String description;
     private HashMap<String, Room> exits;        // stores exits of this room.
     private Item item;
-    private ArrayList<Item> itemsInRoom;    // stores items in this room
+    private ArrayList<Item> itemsInRoom;        // stores items in this room
 
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
      * "an open court yard".
+     * itemsInRoom is an ArrayList of Item objects within the room.
+     * 
      * @param description The room's description.
      */
     public Room(String description) 
@@ -39,6 +48,7 @@ public class Room
 
     /**
      * Define an exit from this room.
+     * 
      * @param direction The direction of the exit.
      * @param neighbor  The room to which the exit leads.
      */
@@ -47,11 +57,21 @@ public class Room
         exits.put(direction, neighbor);
     }
     
+    /**
+     * Put an item into the room.
+     * 
+     * @param Item item to be put into room.
+     */
     public void setItem(Item item)
     {
         itemsInRoom.add(item);
     }
     
+    /**
+     * Remove an item from a room.
+     * 
+     * @param Item item to be removed from a room.
+     */
     public void removeItem(Item item)
     {
         itemsInRoom.remove(item);
@@ -69,17 +89,21 @@ public class Room
     /**
      * Return a description of the room in the form:
      *     You are in the kitchen.
-     *     Exits: north west
+     *     Exits:   north west
+     *     Items:   chocolate
+     *                      - a bar of chocolate
+     *                      - weight: 1
+     *                      
      * @return A long description of this room
      */
     public String getLongDescription()
     {
         return "You are " + description + ".\n" + getExitString() + "\n" + getItemsString();
     }
-
     /**
      * Return a string describing the room's exits, for example
-     * "Exits: north west".
+     * "Exits:  north west".
+     * 
      * @return Details of the room's exits.
      */
     private String getExitString()
@@ -92,6 +116,14 @@ public class Room
         return returnString;
     }
     
+    /**
+     * Return a string describing the room's items, for example
+     * "Items:   chocolate
+     *                      - a bar of chocolate
+     *                      - weight: 1".
+     *                      
+     * @return String details of the room's items.
+     */
     private String getItemsString()
     {
         String returnString = "Items:\t";
@@ -102,6 +134,13 @@ public class Room
         return returnString;
     }
     
+    /**
+     * Method to test to see if a room has an item that matches
+     * a particular item id.
+     * 
+     * @param String itemID to test for similarity
+     * @return true if a match is found, false if not
+     */
     public boolean hasItem(String itemID)
     {
         boolean itemTest = false;
@@ -113,6 +152,12 @@ public class Room
         return itemTest;
     }
     
+    /**
+     * Returns an Item in the room that matches a particular item id.
+     * 
+     * @param String itemID to test for similarity in item id
+     * @return Item that shares a similir item id
+     */
     public Item getItem(String itemID)
     {
         Item returnItem = null;

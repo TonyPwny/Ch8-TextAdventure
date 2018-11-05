@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 
 /**
- * Write a description of class Player here.
+ * Player class to manage current room location, player inventory, and player name.
  *
  * @author Anthony Tiongson
  * @version 2018.11.4
  */
 public class Player
 {
-    // instance variables - replace the example below with your own
+    // instance variables
     private static final int STARTING_MAX_BURDEN = 10;
     private String name;
     private Room currentRoom;
@@ -29,6 +29,12 @@ public class Player
         inventory = new ArrayList<Item>();
     }
     
+    /**
+     * Constructor for objects of class Player
+     * 
+     * @param String name to name Player
+     * @param Room currentRoom to set starting room
+     */
     public Player(String name, Room currentRoom) {
         this.name = name;
         this.currentRoom = currentRoom;
@@ -37,14 +43,30 @@ public class Player
         inventory = new ArrayList<Item>();
     }
     
+    /**
+     * Method to set the player's current room
+     * 
+     * @param Room currentRoom of player
+     */
     public void setRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
     }
     
+    /**
+     * Method to return the player's current room
+     * 
+     * @return Room currentRoom of player
+     */
     public Room getRoom() {
         return currentRoom;
     }
     
+    /**
+     * Method to take an Item object that may be in a room and place it
+     * in Player inventory
+     * 
+     * @param String itemId of an Item object's id attempted to be taken
+     */
     public void takeItem(String itemID)
     {
         if (currentRoom.hasItem(itemID)) {
@@ -70,6 +92,11 @@ public class Player
         }
     }
     
+    /**
+     * Method to drop an object Item in player inventory with a particular item id.
+     * 
+     * @param String itemID of an Item object's id attempted to be dropped
+     */
     public void dropItem(String itemID)
     {
         if(hasItem(itemID))
@@ -88,6 +115,12 @@ public class Player
         }
     }
     
+    /**
+     * Method to test if a player has an Item object with a particular id in inventory
+     * 
+     * @param String itemID of a particular Item object's id to test
+     * @return true if an Item object with an identical id is in inventory, false otherwise
+     */
     public boolean hasItem(String itemID)
     {
         boolean itemTest = false;
@@ -99,6 +132,12 @@ public class Player
         return itemTest;
     }
     
+    /**
+     * Method to return an Item object of a particular id in Player inventory.
+     * 
+     * @param String itemID of a particular Item object id to test
+     * @return Item object that has an identical id
+     */
     public Item getItem(String itemID)
     {
         Item returnItem = null;
@@ -120,6 +159,13 @@ public class Player
         return name;
     }
     
+    /**
+     * Method to return a detailed string of Player inventory of Item objects
+     * Also returns information regarding a Player's equipment burden and maximum
+     * alloted burden.
+     * 
+     * @return String details of Player inventory
+     */
     public String getInventoryString()
     {
         
@@ -135,6 +181,11 @@ public class Player
         return returnString;
     }
     
+    /**
+     * Method to eat special Item objects known as Food objects in Player inventory.
+     * 
+     * @param String id of attempted Food object's id to be eaten in inventory
+     */
     public void eat(String id)
     {
         if(hasItem(id)) {

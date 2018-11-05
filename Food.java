@@ -1,9 +1,10 @@
 
 /**
- * Write a description of class Food here.
+ * Food class is a subclass of Item to recognize special items that can be eaten.
+ * It has an additional field to signify if the food is magical or not.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Anthony Tiongson
+ * @version 2018.11.04
  */
 public class Food extends Item
 {
@@ -11,7 +12,8 @@ public class Food extends Item
     private boolean magical;
 
     /**
-     * Constructor for objects of class Food
+     * No-Arg Constructor for objects of class Food
+     * It makes a non-magical bar of chocolate.
      */
     public Food()
     {
@@ -20,6 +22,14 @@ public class Food extends Item
         magical = false;
     }
     
+    /**
+     * Constructor for objects of class Food.
+     * @param String id of food
+     * @param String name of food
+     * @param String description of food
+     * @param integer weight of food
+     * @param boolean magical to signify if food is magical or not
+     */
     public Food(String id, String name, String description, int weight, boolean magical)
     {
         super(id, name, description, weight);
@@ -27,6 +37,11 @@ public class Food extends Item
         this.magical = magical;
     }
     
+    /**
+     * Method to test if a food object is magical or not.
+     * 
+     * @return boolean true if food is magical false otherwise
+     */
     public boolean isMagical()
     {
         return magical;
