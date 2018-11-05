@@ -62,8 +62,9 @@ public class Game
                             "and chairs in the middle of the room.  To your north\n" +
                             "is a wall with a clock hanging on it.  A railing is\n" +
                             "attached to it to the northwest leading to stairs\n" +
-                            "going down to the floor below.  On the west wall is\n" +
-                            "an area for pet bowls.");
+                            "going down to the floor below.  To the northwest\n" +
+                            "is the opening to other side of the attic.  On\n" +
+                            "the west wall is an area for pet bowls");
         hub = new Room("in a central hallway...\n" +
                             "It connects all the rooms and stairways.  There are\n" +
                             "doorways to the northwest, north, southeast, and\n" +
@@ -82,7 +83,7 @@ public class Game
         office = new Room("in a personal office of some kind...\n" +
                             "Hopefully lots of business deals to be had in here.\n" +
                             "The exit back into the central hallway is to your\n" +
-                            "southeast.");
+                            "southeast");
         artStudio = new Room("surrounded by a mess of creative materials in here...\n" +
                             "A canvas and an angled desk sit around all the clutter\n" +
                             "against the northern wall.  The exit back into the\n" +
@@ -98,17 +99,17 @@ public class Game
                             "kitchen is to the east");
         foyer = new Room("in the first floor at the bottom of the L-shaped stairs...\n" +
                             "It's small, and just serves as a foyer...\n" +
-                            "There's a windowed door that automatically locks the\n" +
-                            "outer handleset with a view out into a vestibule to the\n" +
-                            "north and the stairs back up to the second floor are\n" +
-                            "to the southeast");
+                            "There's a windowed door with a view out into a\n" +
+                            "vestibule that automatically locks its outer\n" +
+                            "handleset to the north and the stairs back up to the\n" +
+                            "second floor are to the southeast");
         vestibule = new Room("in the vestibule to the household...\n" +
                             "The outside world can be seen on the other side of the door\n" +
                             "opposite from the door leading into the abode on the\n" +
                             "southern wall");
         outside = new Room("outside...\n" +
                             "Your Prius is parked in the driveway to the right/east\n" +
-                            "of you.  The entrance back into the apartment is south");
+                            "of you.  The entrance into the apartment is south");
         prius = new Room("finally at your car...\n" +
                             "Time to get to work");
         beforeLocked = vestibule;
@@ -212,7 +213,7 @@ public class Game
             else if(player.getRoom() == finalRoom)
             {
                 System.out.println("You realize you don't have your keys though...\n" +
-                                    "You can't get in! *sad trombone*\n" +
+                                    "You can't get in the car! *sad trombone*\n" +
                                     "You are still outside...");
                 player.setRoom(beforeFinal);
             }
@@ -355,8 +356,12 @@ public class Game
         }
         else if (player.getRoom() == beforeLocked && nextRoom == lockedRoom && !player.hasItem("keys"))
         {
-            System.out.println("Oh wow you locked yourself out!\n" +
+            System.out.println("Oh, wow!  In your rush, you not only\n" +
+                                "forgot your keys but you also forgot\n" +
+                                "that this door automatically locks!!\n" +
+                                "You locked yourself out!!!\n" +
                                 "Game over, man...");
+            System.exit(0);
         }
         else if (player.getRoom() == beforeLocked && nextRoom == lockedRoom && player.hasItem("keys"))
         {
