@@ -62,7 +62,7 @@ public class Game
                             "and chairs in the middle of the room.  To your north\n" +
                             "is a wall with a clock hanging on it.  A railing is\n" +
                             "attached to it to the northwest leading to stairs\n" +
-                            "going down to the floor below.  To the northwest\n" +
+                            "going down to the floor below.  To the northeast\n" +
                             "is the opening to other side of the attic.  On\n" +
                             "the west wall is an area for pet bowls");
         hub = new Room("in a central hallway...\n" +
@@ -113,9 +113,9 @@ public class Game
         prius = new Room("finally at your car...\n" +
                             "Time to get to work");
         beforeLocked = vestibule;
-        lockedRoom = foyer;
+        lockedRoom = foyer; // lose game if keys are not in inventory
         beforeFinal = outside;
-        finalRoom = prius;  // end game in Prius
+        finalRoom = prius;  // win game in Prius if keys are in inventory
         
         // initialise room exits
         livingRoom.setExit("southeast", diningRoom);
@@ -144,7 +144,7 @@ public class Game
         outside.setExit("south", vestibule);
         outside.setExit("east", prius);
         
-        // create items
+        // create items and food
         Item dust, pabloBowl, willyBowl, waterBowl, television, macBookAir, sharpie,
                 keys, iPhone, watch;
         Food chocolate, magicCookie;
@@ -172,7 +172,7 @@ public class Game
         magicCookie = new Food("cookie", "a magical cookie",
                                 "It's a cookie...and it's magical!", 1, true);
         
-        // put items into rooms
+        // put items and food into rooms
         
         hub.setItem(dust);
         diningRoom.setItem(pabloBowl);
