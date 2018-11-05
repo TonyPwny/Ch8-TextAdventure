@@ -199,12 +199,14 @@ public class Player
                 {
                     System.out.println("You ate " + food.getName() + "!!\n" +
                                         "Somehow, you feel stronger...");
+                    equipBurden -= food.getWeight();
                     maxBurden = 100;
                     inventory.remove(food);
                 }
                 else
                 {
                     System.out.println("You ate " + food.getName() + ".");
+                    equipBurden -= food.getWeight();
                     inventory.remove(food);
                 }
             }
