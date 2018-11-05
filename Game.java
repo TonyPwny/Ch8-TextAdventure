@@ -52,17 +52,18 @@ public class Game
       
         // create the rooms
         livingRoom = new Room("in half of a finished attic...\n" +
-                            "It's set up as a living room.  To your north is a TV.\n" +
-                            "You can see stairs to the southwest behind a railing\n" +
-                            "attached to a wall in the south.  To the southeast is\n" +
-                            "an opening to the other side of the attic");
+                            "It's set up as a living room.  To your north is a TV\n" +
+                            "stand.  You can see stairs to the southwest behind a\n" +
+                            "railling attached to a wall in the south.  To the\n" +
+                            "southeast is an opening to the other side of the\n" +
+                            "attic");
         diningRoom = new Room("in one side of a finished attic...\n" +
                             "Seems to be the dining area; there is a dining table\n" +
                             "and chairs in the middle of the room.  To your north\n" +
                             "is a wall with a clock hanging on it.  A railing is\n" +
                             "attached to it to the northwest leading to stairs\n" +
-                            "going down to the floor below.  On the west wall are\n" +
-                            "two small food bowls and one larger water bowl");
+                            "going down to the floor below.  On the west wall is\n" +
+                            "an area for pet bowls.");
         hub = new Room("in a central hallway...\n" +
                             "It connects all the rooms and stairways.  There are\n" +
                             "doorways to the northwest, north, southeast, and\n" +
@@ -184,7 +185,7 @@ public class Game
         bedroom.setItem(iPhone);
         bedroom.setItem(watch);
         kitchen.setItem(chocolate);
-        kitchen.setItem(magicCookie);
+        pantry.setItem(magicCookie);
         foyer.setItem(dust);
         
         player = new Player("player", livingRoom);  // start game in the living room
