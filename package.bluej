@@ -35,17 +35,17 @@ dependency4.type=UsesDependency
 dependency5.from=Parser
 dependency5.to=Command
 dependency5.type=UsesDependency
-dependency6.from=Player
-dependency6.to=Room
+dependency6.from=GameMain
+dependency6.to=Game
 dependency6.type=UsesDependency
 dependency7.from=Player
-dependency7.to=Item
+dependency7.to=Room
 dependency7.type=UsesDependency
 dependency8.from=Player
-dependency8.to=Food
+dependency8.to=Item
 dependency8.type=UsesDependency
-dependency9.from=GameMain
-dependency9.to=Game
+dependency9.from=Player
+dependency9.to=Food
 dependency9.type=UsesDependency
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -67,9 +67,15 @@ editor.fx.0.y=43
 >>>>>>> dev
 =======
 editor.fx.0.height=722
+<<<<<<< HEAD
 editor.fx.0.width=800
 editor.fx.0.x=283
 editor.fx.0.y=31
+>>>>>>> dev
+=======
+editor.fx.0.width=898
+editor.fx.0.x=34
+editor.fx.0.y=50
 >>>>>>> dev
 objectbench.height=103
 objectbench.width=436
